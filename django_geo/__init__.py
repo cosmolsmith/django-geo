@@ -109,12 +109,14 @@ class Bounds(object):
         d = geopy_distance(kilometers=distance)
         point = GeoPyPoint(center.latitude, center.longitude)
 
-        ne = d.destination(point, 45)
-        sw = d.destination(point, 225)
+        no = d.destination(point, 0)
+        ea = d.destination(point, 90)
+        so = d.destination(point, 180)
+        we = d.destination(point, 270)
 
         return Bounds(
-            sw=Point(Decimal(sw.latitude), Decimal(sw.longitude)), 
-            ne=Point(Decimal(ne.latitude), Decimal(ne.longitude)))
+            sw=Point(Decimal(so.latitude), Decimal(we.longitude)),
+            ne=Point(Decimal(no.latitude), Decimal(ea.longitude)))
 
     @classmethod
     def get_coord_bounds(cls, lat, lng, distance):
